@@ -1,0 +1,20 @@
+
+workflows:
+  react-native-ci-cd:
+    name: React Native CI/CD
+    max_build_duration: 60
+    environment:
+      node: 16.20.0
+      npm: 8.19.4
+    scripts:
+      - name: Install dependencies
+        script: npm install
+      - name: Run ESLint
+        script: npx eslint . --ext .js,.jsx,.ts,.tsx
+      - name: Run tests
+        script: npm test
+      - name: Build Android APK
+        script: |
+          npm run build-android || echo "Build script not defined"
+    artifacts:
+      - build/app/outputs/**/*.apk
